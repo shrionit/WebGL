@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WebGL</title>
+	<script src="../libs/GL/gl-matrix-min.js" defer></script>
+	<script src="./Loader.js" defer></script>
+	<script src="./webgl.js" defer></script>
+	
+</head>
+<style>
+	*{
+		padding: 0;
+		margin: 0;
+		overflow: hidden;
+	}
+</style>
+<body>
+	<script id='vS' type="x-shader/x-vertex">
+		attribute vec3 position;
+		attribute vec2 texCoord;
+		uniform mat4 projection;
+		uniform mat4 model;
+		uniform mat4 view;
+		varying highp vec2 vTexCoord;
+		void main(){
+			gl_Position = projection * view * model * vec4(position, 1.0);
+			vTexCoord = texCoord;
+		}
+	</script>
+	<script id='fS' type="x-shader/x-fragment">
+		varying highp vec2 vTexCoord;
+		uniform sampler2D uSampler;
+		void main(){
+			gl_FragColor = texture2D(uSampler, vTexCoord) * vec4(0.1, 0.1, 0.9, 0.1);
+		}
+	</script>
+</body>
+</html>
